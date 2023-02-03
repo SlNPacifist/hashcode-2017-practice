@@ -1,3 +1,5 @@
+import type { CacheServers, Endpoint, Requests } from "./types";
+
 const fs = require('fs');
 
 function numbers(lines) {
@@ -9,11 +11,11 @@ module.exports = function readFile(filename) {
     const lines = data.split('\n').reverse();
     let [v, e, r, c, cacheServerSize] = numbers(lines);
     const videoSizes = numbers(lines);
-    const endpoints = [];
+    const endpoints: Endpoint = [];
 
     while (e--) {
         let [dataCenterlatency, k] = numbers(lines);
-        const cacheServers = [];
+        const cacheServers: CacheServers = [];
         while (k--) {
             const [cacheServerId, endpointLatency] = numbers(lines);
             cacheServers.push({cacheServerId, endpointLatency});
@@ -24,7 +26,7 @@ module.exports = function readFile(filename) {
         });
     }
 
-    const requests = [];
+    const requests: Requests = [];
     while (r--) {
         const [videoId, endpointId, requestsAmount] = numbers(lines);
         requests.push({ videoId, endpointId, requestsAmount });
