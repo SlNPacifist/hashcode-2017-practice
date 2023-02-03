@@ -22,7 +22,7 @@ export function calculateScore(inputPath: string, outputPath: string) {
         const { dataCenterlatency, cacheServers } = input.endpoints[endpointId];
         let bestLatency = dataCenterlatency;
         for (const { cacheServerId, endpointLatency } of cacheServers) {
-            if (output.get(cacheServerId).has(videoId)) {
+            if (output.get(cacheServerId)?.has(videoId)) {
                 bestLatency = Math.min(bestLatency, endpointLatency);
             }
         }
