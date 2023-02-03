@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "https://codingcompetitions.withgoogle.com/hashcode/round/0000000000c6171c/0000000000c6109c",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "ts-node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/SlNPacifist/hashcode-2017-practice#readme",
   "devDependencies": {
-    "@types/node": "^18.11.18"
+    "@types/node": "^18.11.18",
+    "ts-node": "^10.9.1"
   }
 }

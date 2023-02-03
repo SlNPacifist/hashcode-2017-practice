@@ -8,7 +8,7 @@ function numbers(lines: Array<string>) {
 export default function readFile(filename) {
     const data = fs.readFileSync(filename, 'utf-8');
     const lines = data.split('\n').reverse();
-    let [v, e, r, c, cacheServerSize] = numbers(lines);
+    let [v, e, r, cacheServersCount, cacheServerSize] = numbers(lines);
     const videoSizes = numbers(lines);
     const endpoints: Endpoint = [];
 
@@ -36,5 +36,6 @@ export default function readFile(filename) {
         endpoints,
         requests,
         cacheServerSize,
+        cacheServersCount,
     }
 }
