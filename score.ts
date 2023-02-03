@@ -1,20 +1,23 @@
 import * as fs from 'fs';
 import parseInput from './input';
 
-function parseOutput(outputPath: string) {
-    const lines = fs.readFileSync(outputPath, 'utf-8');
-
+function parseOutput(outputContent: string): Map<number, Set<number>> {
     // Array<[number, Set<number>]>
-    const cacheServersUsage: Array<[number, Set<number>]> = lines.split('\n').slice(1)
+    const cacheServersUsage: Array<[number, Set<number>]> = outputContent.split('\n').slice(1)
         .map(line => line.split(' ').map(Number))
         .map(([cacheServerId, ...videoIds]) => [cacheServerId, new Set(videoIds)]);
 
     return new Map(cacheServersUsage);
 }
 
-export function calculateScore(inputPath: string, outputPath: string) {
+export function calculateScoreFile(inputPath: string, outputPath: string) {
+    const outputContent = fs.readFileSync(outputPath, 'utf-8');
+    const output = parseOutput(outputContent);
+    return calculateScore(inputPath, output);
+}
+
+export function calculateScore(inputPath: string, output: Map<number, Set<number>>) {
     const input = parseInput(inputPath);
-    const output = parseOutput(outputPath);
 
     let savedTime = 0;
     let totalRequestAmount = 0;
