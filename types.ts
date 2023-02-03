@@ -14,7 +14,7 @@ export type Video = {
 
 export type Endpoint = Array<{
     cacheServers: CacheServers;
-    dataCenterlatency: Array<number>;
+    dataCenterlatency: number;
 }>
 
 export type CacheServers = Array<{
