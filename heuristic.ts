@@ -28,7 +28,7 @@ export const solve = ({
         if (availableCacheServers.length > 0) {
             const cacheServer = availableCacheServers[0];
             cacheServerFiles.get(cacheServer.cacheServerId)!.add(req.videoId);
-            availableCacheSize[req.videoId] -= videoSize;
+            availableCacheSize[cacheServer.cacheServerId] -= videoSize;
         }
     });
 

@@ -68,7 +68,7 @@ export const solve = ({
             const cacheServer = availableCacheServers[0];
             // @ts-ignore
             cacheServerFiles.get(cacheServer.cacheServerId).add(bestRequest.videoId);
-            availableCacheSize[bestRequest.videoId] -= videoSize;
+            availableCacheSize[cacheServer.cacheServerId] -= videoSize;
 
             // clear cache
             const cachedRequests = reqByVideoId.get(bestRequest.videoId) || [];
