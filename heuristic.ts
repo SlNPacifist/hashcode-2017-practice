@@ -1,5 +1,7 @@
 // greedy sort by requests total count
-const compareRequests = (req1, req2) => {
+import { inputData, Requests } from "./types";
+
+const compareRequests = (req1: Requests[number], req2: Requests[number]) => {
     return req2.requestsAmount - req1.requestsAmount;
 }
 
@@ -10,7 +12,7 @@ export const solve = ({
     requests,
     cacheServerSize,
     cacheServersCount,
-}) => {
+}: inputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
     const cacheServerFiles = Array.from(Array(cacheServersCount), () => []);
 
@@ -26,7 +28,7 @@ export const solve = ({
         if (availableCacheServers.length > 0) {
             const cacheServer = availableCacheServers[0];
             // @ts-ignore
-            cacheServerFiles[cacheServer.cacheServerId].push(req.videoId); 
+            cacheServerFiles[cacheServer.cacheServerId].push(req.videoId);
             availableCacheSize[req.videoId] -= videoSize;
         }
     });

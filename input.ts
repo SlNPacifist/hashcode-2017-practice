@@ -1,11 +1,12 @@
 import type { CacheServer, Endpoint, Request } from "./types";
 import * as fs from "fs";
+import { inputData } from "./types";
 
 function numbers(lines: Array<string>) {
     return lines.pop()!.split(' ').map(Number);
 }
 
-export default function readFile(filename: string) {
+export default function readFile(filename: string): inputData {
     const data = fs.readFileSync(filename, 'utf-8');
     const lines = data.split('\n').reverse();
     let [v, e, r, cacheServersCount, cacheServerSize] = numbers(lines);
@@ -37,5 +38,5 @@ export default function readFile(filename: string) {
         requests,
         cacheServerSize,
         cacheServersCount,
-    }
+    };
 }
