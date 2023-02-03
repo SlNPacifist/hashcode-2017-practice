@@ -20,7 +20,11 @@
   },
   "homepage": "https://github.com/SlNPacifist/hashcode-2017-practice#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.18",
     "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
