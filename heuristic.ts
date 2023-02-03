@@ -14,7 +14,7 @@ export const solve = ({
     cacheServersCount,
 }: inputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
-    const cacheServerFiles = Array.from(Array(cacheServersCount), () => []);
+    const cacheServerFiles: number[][] = Array.from(Array(cacheServersCount), () => []);
 
     const sortedRequests = [...requests].sort(compareRequests);
 
