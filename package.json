@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SlNPacifist/hashcode-2017-practice/issues"
   },
-  "homepage": "https://github.com/SlNPacifist/hashcode-2017-practice#readme"
+  "homepage": "https://github.com/SlNPacifist/hashcode-2017-practice#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  }
 }
