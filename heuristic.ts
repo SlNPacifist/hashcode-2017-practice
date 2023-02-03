@@ -1,7 +1,7 @@
 // greedy sort by requests total count
-import { inputData, Requests } from "./types";
+import { inputData, Request } from "./types";
 
-const compareRequests = (req1: Requests[number], req2: Requests[number]) => {
+const compareRequests = (req1: Request, req2: Request) => {
     return req2.requestsAmount - req1.requestsAmount;
 }
 
