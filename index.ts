@@ -1,8 +1,8 @@
 import { solve } from './heuristic2';
 import readFile from './input';
 import { calculateScore } from './score';
-
-const input_file = './input/trending_today.in';
+//1492068
+const input_file = './input/kittens.in.txt';
 
 const data = readFile(input_file);
 

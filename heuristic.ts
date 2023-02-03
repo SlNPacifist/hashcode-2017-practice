@@ -14,7 +14,7 @@ export const solve = ({
     cacheServersCount,
 }: inputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
-    const cacheServerFiles: number[][] = Array.from(Array(cacheServersCount), () => []);
+    const cacheServerFiles: Map<number, Set<number>> = new Map(Array(cacheServersCount).fill(0).map((_, i) => [i, new Set()]));
 
     const sortedRequests = [...requests].sort(compareRequests);
 
@@ -27,8 +27,7 @@ export const solve = ({
             .sort((c1, c2) => c1.endpointLatency - c2.endpointLatency);
         if (availableCacheServers.length > 0) {
             const cacheServer = availableCacheServers[0];
-            // @ts-ignore
-            cacheServerFiles[cacheServer.cacheServerId].push(req.videoId);
+            cacheServerFiles.get(cacheServer.cacheServerId)!.add(req.videoId);
             availableCacheSize[req.videoId] -= videoSize;
         }
     });
