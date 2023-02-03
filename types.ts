@@ -2,7 +2,7 @@ export type inputData = {
     cacheServerSize: number;
     cacheServersCount: number;
     endpoints: Endpoint;
-    requests: Requests;
+    requests: Request;
     videoSizes: number[];
 }
 export type Video = {
