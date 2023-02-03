@@ -12,18 +12,18 @@ export type Video = {
     requestingEndpointsIds: Array<number>;
 }
 
-export type Endpoint = Array<{
-    cacheServers: CacheServers;
+export type Endpoint = {
+    cacheServers: Array<CacheServer>;
     dataCenterlatency: number;
-}>
+}
 
-export type CacheServers = Array<{
+export type CacheServer = {
     cacheServerId: number;
     endpointLatency: number;
-}>
+}
 
-export type Requests = Array<{
+export type Request = {
     requestsAmount: number;
     videoId: number;
     endpointId: number;
-}>
+}
