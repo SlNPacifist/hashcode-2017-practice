@@ -1,9 +1,6 @@
 import * as fs from "fs";
 import type { CacheServer, Endpoint, Request, InputData } from "./types";
-
-function numbers(lines: Array<string>) {
-    return lines.pop()!.split(' ').map(Number);
-}
+import { numbers } from "./parser";
 
 export default function readFile(filename: string): InputData {
     const data = fs.readFileSync(filename, 'utf-8');

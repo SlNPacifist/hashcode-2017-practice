@@ -26,3 +26,5 @@ export type Request = {
     videoId: number;
     endpointId: number;
 }
+
+export type OutputData = Array<Set<number>>;

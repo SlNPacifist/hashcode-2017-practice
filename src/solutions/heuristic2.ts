@@ -10,7 +10,7 @@ export const solve = ({
     cacheServersCount,
 }: InputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
-    const cacheServerFiles: Map<number, Set<number>> = new Map(Array(cacheServersCount).fill(0).map((_, i) => [i, new Set()]));
+    const cacheServerFiles: Array<Set<number>> = new Array(cacheServersCount).fill(0).map(() => new Set());
     const scoredRequests = requests.map(r => ({...r, score: bestScore(r)}));
     const actions = new Heap<typeof scoredRequests[0]>((a, b) => b.score - a.score);
     for (const r of scoredRequests) {
@@ -23,7 +23,7 @@ export const solve = ({
 
         const cacheServersWithFile = endpoint.cacheServers
             .filter(
-                ({ cacheServerId }) => (cacheServerFiles.get(cacheServerId)?.has(req.videoId))
+                ({ cacheServerId }) => (cacheServerFiles[cacheServerId].has(req.videoId))
             );
 
         const minLatency = _.min(cacheServersWithFile
@@ -72,8 +72,7 @@ export const solve = ({
         if (!cacheServer) {
             throw new Error("Unexpectedly cacheServer not found");
         }
-        // @ts-ignore
-        cacheServerFiles.get(cacheServer.cacheServerId).add(bestRequest.videoId);
+        cacheServerFiles[cacheServer.cacheServerId].add(bestRequest.videoId);
         availableCacheSize[cacheServer.cacheServerId] -= videoSize;
     }
 
