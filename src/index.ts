@@ -3,12 +3,14 @@ import { table } from 'table';
 import { solve as heuristic } from './solutions/heuristic';
 import { solve as heuristic2 } from './solutions/heuristic2';
 import { solve as heuristic3 } from './solutions/heuristic3';
+import { solve as heuristic4 } from './solutions/heuristic4';
 import readFile from './input';
 import { calculateScore } from './score';
 const solutions = {
     heuristic,
     heuristic2,
     heuristic3,
+    heuristic4,
 }
 const files = [
     // 'example.in.txt',
