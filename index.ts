@@ -1,12 +1,23 @@
-import { solve } from './heuristic2';
+import { solve } from './heuristic';
+import { solve as solve2 } from './heuristic2';
 import readFile from './input';
 import { calculateScore } from './score';
-//1492068
-const input_file = './input/kittens.in.txt';
-
-const data = readFile(input_file);
-
-const solution = solve(data)
-console.log(solution)
-
-console.log("SCORE: ", calculateScore(input_file, solution));
+const solutions = {
+    heuristic: solve,
+    heuristic2: solve2,
+}
+const files = [
+    // 'example.in.txt',
+    'kittens.in.txt',
+    'me_at_the_zoo.in',
+    'trending_today.in',
+    'videos_worth_spreading.in'
+];
+for (const input_file of files) {
+    const full_input_file = `./input/${input_file}`;
+    const data = readFile(full_input_file);
+    for (const [solutionName, solve] of Object.entries(solutions)) {
+        const solution = solve(data);
+        console.log(`SCORE ${input_file} ${solutionName}: ${calculateScore(full_input_file, solution)}`);
+    }
+}
