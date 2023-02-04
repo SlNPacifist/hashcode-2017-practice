@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "heap": "0.2.7",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "table": "6.8.1"
   }
 }
