@@ -1,5 +1,5 @@
 // greedy sort by requests total count
-import { inputData, Request } from "../types";
+import { InputData, Request } from "../types";
 
 const compareRequests = (req1: Request, req2: Request) => {
     return req2.requestsAmount - req1.requestsAmount;
@@ -12,7 +12,7 @@ export const solve = ({
     requests,
     cacheServerSize,
     cacheServersCount,
-}: inputData) => {
+}: InputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
     const cacheServerFiles: Map<number, Set<number>> = new Map(Array(cacheServersCount).fill(0).map((_, i) => [i, new Set()]));
 

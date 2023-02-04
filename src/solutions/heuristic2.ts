@@ -1,4 +1,4 @@
-import { inputData, Request } from "../types";
+import { InputData, Request } from "../types";
 import _ from "lodash";
 
 export const solve = ({
@@ -7,7 +7,7 @@ export const solve = ({
     requests,
     cacheServerSize,
     cacheServersCount,
-}: inputData) => {
+}: InputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
     const cacheServerFiles: Map<number, Set<number>> = new Map(Array(cacheServersCount).fill(0).map((_, i) => [i, new Set()]));
     const reqScore: Map<Request, number> = new Map();

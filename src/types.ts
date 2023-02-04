@@ -1,9 +1,9 @@
-export type inputData = {
-    cacheServerSize: number;
-    cacheServersCount: number;
+export type InputData = {
+    videoSizes: Array<number>;
     endpoints: Array<Endpoint>;
     requests: Array<Request>;
-    videoSizes: number[];
+    cacheServerSize: number;
+    cacheServersCount: number;
 }
 export type Video = {
     size: number;
