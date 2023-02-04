@@ -1,7 +1,9 @@
 import * as fs from 'fs';
 import parseInput from './input';
-import { OutputData } from './types';
+import { InputData, OutputData } from './types';
 import { numbers } from './parser';
+import assert from 'assert';
+import _ from "lodash";
 
 function parseOutput(outputContent: string): OutputData {
     const res: OutputData = [];
@@ -28,8 +30,18 @@ export function calculateScoreFile(inputPath: string, outputPath: string) {
     return calculateScore(inputPath, output);
 }
 
+function validateOutput(input: InputData, output: OutputData) {
+    assert.equal(output.length, input.cacheServersCount);
+    for (const videos of output) {
+        const sizeSum = _.sum([...videos].map(id => input.videoSizes[id]));
+        assert(sizeSum <= input.cacheServerSize, `Cache server videos size is ${sizeSum}, expected no more than ${input.cacheServerSize}`);
+    }
+}
+
 export function calculateScore(inputPath: string, output: OutputData) {
     const input = parseInput(inputPath);
+
+    validateOutput(input, output);
 
     let savedTime = 0;
     let totalRequestAmount = 0;
