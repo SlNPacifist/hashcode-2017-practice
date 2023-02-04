@@ -1,10 +1,12 @@
-import { solve } from './solutions/heuristic';
-import { solve as solve2 } from './solutions/heuristic2';
+import { solve as heuristic } from './solutions/heuristic';
+import { solve as heuristic2 } from './solutions/heuristic2';
+import { solve as heuristic3 } from './solutions/heuristic3';
 import readFile from './input';
 import { calculateScore } from './score';
 const solutions = {
-    heuristic: solve,
-    heuristic2: solve2,
+    heuristic,
+    heuristic2,
+    heuristic3,
 }
 const files = [
     // 'example.in.txt',
