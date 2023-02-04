@@ -1,5 +1,5 @@
-import { solve } from './heuristic';
-import { solve as solve2 } from './heuristic2';
+import { solve } from './solutions/heuristic';
+import { solve as solve2 } from './solutions/heuristic2';
 import readFile from './input';
 import { calculateScore } from './score';
 const solutions = {

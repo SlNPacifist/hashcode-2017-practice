@@ -1,4 +1,4 @@
-import { inputData, Request } from "./types";
+import { inputData, Request } from "../types";
 import _ from "lodash";
 
 export const solve = ({
