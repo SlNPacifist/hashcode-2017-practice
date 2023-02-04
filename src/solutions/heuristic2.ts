@@ -1,4 +1,5 @@
 import { InputData, Request } from "../types";
+import Heap from "heap";
 import _ from "lodash";
 
 export const solve = ({
@@ -10,18 +11,13 @@ export const solve = ({
 }: InputData) => {
     const availableCacheSize = Array(cacheServersCount).fill(cacheServerSize);
     const cacheServerFiles: Map<number, Set<number>> = new Map(Array(cacheServersCount).fill(0).map((_, i) => [i, new Set()]));
-    const reqScore: Map<Request, number> = new Map();
-    const reqByVideoId: Map<number, Request[]> = new Map();
-    requests.forEach(req => {
-        const requests = reqByVideoId.get(req.videoId) || [];
-        reqByVideoId.set(req.videoId, requests.concat(req));
-    });
+    const scoredRequests = requests.map(r => ({...r, score: bestScore(r)}));
+    const actions = new Heap<typeof scoredRequests[0]>((a, b) => b.score - a.score);
+    for (const r of scoredRequests) {
+        actions.push(r);
+    }
 
-    const bestScore = (req: Request) => {
-        if (reqScore.has(req)) {
-            return reqScore.get(req)!;
-        }
-
+    function bestScore(req: Request): number {
         const videoSize = videoSizes[req.videoId];
         const endpoint = endpoints[req.endpointId];
 
@@ -37,7 +33,7 @@ export const solve = ({
 
         const availableCacheServers = endpoint.cacheServers
             .filter(
-                ({ cacheServerId, endpointLatency }) => (availableCacheSize[cacheServerId] >= videoSize)
+                ({ cacheServerId }) => (availableCacheSize[cacheServerId] >= videoSize)
             );
 
         if (!availableCacheServers.length) {
@@ -46,34 +42,39 @@ export const solve = ({
         
         const bestCacheServer = _.minBy(availableCacheServers, "endpointLatency")!;
         const score = (minLatency - bestCacheServer.endpointLatency) * req.requestsAmount;
-        reqScore.set(req, score);
         
         return score;
     }
 
-    for (let i = 0; i < requests.length; i++) {
-        let bestRequest = _.maxBy(requests, bestScore)!;
-        let score = bestScore(bestRequest);
-        console.log(i, score);
-        if (!bestRequest || score <= 0) {
+    while (true) {
+        let bestRequest = actions.pop();
+        if (!bestRequest) {
             break;
         }
+
+        let score = bestScore(bestRequest);
+        if (score !== bestRequest.score) {
+            bestRequest.score = score;
+            actions.push(bestRequest)
+            continue;
+        }
+
+        if (score <= 0) {
+            break;
+        }
+
         const videoSize = videoSizes[bestRequest.videoId];
         const endpoint = endpoints[bestRequest.endpointId];
         const availableCacheServers = endpoint.cacheServers
             .filter(
-                ({ cacheServerId, endpointLatency }) => (availableCacheSize[cacheServerId] >= videoSize))
-            .sort((c1, c2) => c1.endpointLatency - c2.endpointLatency);
-        if (availableCacheServers.length > 0) {
-            const cacheServer = availableCacheServers[0];
-            // @ts-ignore
-            cacheServerFiles.get(cacheServer.cacheServerId).add(bestRequest.videoId);
-            availableCacheSize[cacheServer.cacheServerId] -= videoSize;
-
-            // clear cache
-            const cachedRequests = reqByVideoId.get(bestRequest.videoId) || [];
-            cachedRequests.forEach(req => reqScore.delete(req));
+                ({ cacheServerId }) => (availableCacheSize[cacheServerId] >= videoSize));
+        const cacheServer = _.minBy(availableCacheServers, 'endpointLatency');
+        if (!cacheServer) {
+            throw new Error("Unexpectedly cacheServer not found");
         }
+        // @ts-ignore
+        cacheServerFiles.get(cacheServer.cacheServerId).add(bestRequest.videoId);
+        availableCacheSize[cacheServer.cacheServerId] -= videoSize;
     }
 
     return cacheServerFiles;

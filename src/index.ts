@@ -3,7 +3,7 @@ import { solve as solve2 } from './solutions/heuristic2';
 import readFile from './input';
 import { calculateScore } from './score';
 const solutions = {
-    heuristic: solve,
+    // heuristic: solve,
     heuristic2: solve2,
 }
 const files = [
