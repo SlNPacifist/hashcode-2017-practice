@@ -26,10 +26,7 @@ export const solve = ({
                 ({ cacheServerId }) => (cacheServerFiles[cacheServerId].has(req.videoId))
             );
 
-        const minLatency = _.min(cacheServersWithFile
-            .map(({ endpointLatency }) => endpointLatency)
-            .concat(endpoint.dataCenterlatency)
-        )!;
+        const minLatency = _.min(_.map(cacheServersWithFile, 'endpointLatency')) ?? endpoint.dataCenterlatency;
 
         const availableCacheServers = endpoint.cacheServers
             .filter(
